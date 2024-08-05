@@ -8,7 +8,7 @@ from .models import Category, Goods, Prices, Images, Size
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('parent_id', 'name', 'slug', 'image',)
+    list_display = ('name', 'parent', 'slug', 'image',)
     prepopulated_fields = {'slug': ('name',)}
 
 

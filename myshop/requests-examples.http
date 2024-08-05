@@ -1,0 +1,63 @@
+# примеры API-запросов
+
+@baseUrl = http://localhost:8000/api/v1
+
+# получение категорий
+GET {{baseUrl}}/categories/
+Content-Type: application/json
+###
+
+# получение категории
+GET {{baseUrl}}/categories/8/
+Content-Type: application/json
+
+###
+
+# получение продуктов
+GET {{baseUrl}}/goods/
+Content-Type: application/json
+
+###
+
+# создание записи в карзине покупок
+POST {{baseUrl}}/cart/
+Content-Type: application/json
+Authorization: Token 4ff7b8b37552a13b5c95599003a5c542b55be427
+
+{
+  "good": 2,
+  "quantity": 10
+}
+
+###
+
+# попытка поменять количенство
+PATCH {{baseUrl}}/cart/20/
+Content-Type: application/json
+Authorization: Token 4ff7b8b37552a13b5c95599003a5c542b55be427
+
+{
+  "quantity": 15
+}
+
+###
+
+# получение данных карзины
+GET {{baseUrl}}/cart/
+Content-Type: application/json
+//Authorization: Token 3ae598d0efe09ee1ba7ca56fa20f89f0a057f2c9
+Authorization: Token 4ff7b8b37552a13b5c95599003a5c542b55be427
+
+###
+
+# удаление продукта
+DELETE {{baseUrl}}/cart/21/
+Content-Type: application/json
+Authorization: Token 4ff7b8b37552a13b5c95599003a5c542b55be427
+
+###
+
+# очистить карзину
+DELETE {{baseUrl}}/cart/0/
+Content-Type: application/json
+Authorization: Token 4ff7b8b37552a13b5c95599003a5c542b55be427
