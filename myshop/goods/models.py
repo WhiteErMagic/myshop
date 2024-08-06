@@ -5,6 +5,9 @@ from django.db.models import Max
 # Create your models here.
 
 class CategoryFirstLevelManager(models.Manager):
+    """
+    Менеджер для вывода только первого уровня категорий
+    """
     def get_queryset(self):
         return super().get_queryset().filter(parent=None)
 
@@ -59,9 +62,6 @@ class Price(models.Model):
     good = models.ForeignKey(Good, on_delete=models.CASCADE, related_name='prices', unique=False)
     date_price = models.DateTimeField(auto_created=True, verbose_name='Дата цены')
     price = models.DecimalField(max_digits=15, decimal_places=2)
-
-    #objects = PricesManager()
-    #first_object = PricesManager()
 
     class Meta:
         verbose_name = 'Цена'
