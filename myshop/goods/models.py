@@ -4,6 +4,10 @@ from django.db.models import Max
 
 # Create your models here.
 
+class CategoryFirstLevelManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(parent=None)
+
 
 class Category(models.Model):
     """
@@ -14,6 +18,9 @@ class Category(models.Model):
     slug = models.SlugField(max_length=255, unique=True)
     image = models.ImageField(upload_to='category_images', null=True, blank=True, verbose_name='Изображение')
 
+    objects = models.Manager()
+    objects_first_level = CategoryFirstLevelManager()
+
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
@@ -23,11 +30,11 @@ class Category(models.Model):
         return self.name
 
 
-class Goods(models.Model):
+class Good(models.Model):
     """
     Товары
     """
-    category_id = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='goods')
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='goods')
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
 
@@ -45,11 +52,11 @@ class PricesManager(models.Manager):
         return super().get_queryset().annotate(max_price=Max('price')).values('price')
 
 
-class Prices(models.Model):
+class Price(models.Model):
     """
     Цены товаров
     """
-    good_id = models.ForeignKey(Goods, on_delete=models.CASCADE, related_name='prices', unique=False)
+    good = models.ForeignKey(Good, on_delete=models.CASCADE, related_name='prices', unique=False)
     date_price = models.DateTimeField(auto_created=True, verbose_name='Дата цены')
     price = models.DecimalField(max_digits=15, decimal_places=2)
 
@@ -62,10 +69,10 @@ class Prices(models.Model):
         indexes = [
             models.Index(fields=['date_price', ]),
         ]
-        ordering = ['good_id', 'date_price']
+        ordering = ['good', 'date_price']
 
     def __str__(self):
-        return f'{self.good_id} {self.date_price} {self.price} '
+        return f'{self.good} {self.date_price} {self.price} '
 
 
 class Size(models.Model):
@@ -82,11 +89,11 @@ class Size(models.Model):
         return self.name
 
 
-class Images(models.Model):
+class GoodImage(models.Model):
     """
     Картинки товаров
     """
-    good_id = models.ForeignKey(Goods, on_delete=models.CASCADE, related_name='images', verbose_name='Товар')
+    good = models.ForeignKey(Good, on_delete=models.CASCADE, related_name='images', verbose_name='Товар')
     image = models.ImageField(upload_to='goods_images', null=True, blank=True, verbose_name='Изображение')
     size = models.ForeignKey(Size, related_name='size_name', on_delete=models.PROTECT)
     date_update = models.DateTimeField(auto_now=True)

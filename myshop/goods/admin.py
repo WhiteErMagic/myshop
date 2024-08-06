@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Goods, Prices, Images, Size
+from .models import Category, Good, Price, GoodImage, Size
 
 
 # Register your models here.
@@ -13,16 +13,16 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class ImagesInline(admin.TabularInline):
-    model = Images
+    model = GoodImage
     extra = 1
 
 
 class PricesInline(admin.TabularInline):
-    model = Prices
+    model = Price
     extra = 1
 
 
-@admin.register(Goods)
+@admin.register(Good)
 class GoodsAdmin(admin.ModelAdmin):
     inlines = [
         ImagesInline,
@@ -31,7 +31,7 @@ class GoodsAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
-@admin.register(Prices)
+@admin.register(Price)
 class PricesAdmin(admin.ModelAdmin):
     pass
 

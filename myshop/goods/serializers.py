@@ -1,11 +1,11 @@
 from rest_framework import serializers
-from .models import Category, Goods, Images, Size, Prices
+from .models import Category, Good, GoodImage, Size, Price
 
 
 class SubCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['name', 'image',]
+        fields = ['id', 'name', 'slug', 'image',]
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -34,6 +34,11 @@ class GoodsCategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ['id', 'name', 'slug', 'image', 'parent', ]
 
+    # def to_representation(self, instance):
+    #     data = CategorySerializer(instance.parent)
+    #     print(data)
+    #     return data
+
 
 class SizeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,26 +46,25 @@ class SizeSerializer(serializers.ModelSerializer):
         fields = ['id', 'name_size', ]
 
 
-class ImagesGoodsSerializer(serializers.ModelSerializer):
+class ImageGoodSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Images
+        model = GoodImage
         fields = ['image', ]
 
 
 class PricesSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Prices
+        model = Price
         fields = ['price', ]
 
 
 class GoodsSerializer(serializers.ModelSerializer):
-    images = ImagesGoodsSerializer(many=True)
+    images = ImageGoodSerializer(many=True)
     prices = PricesSerializer(many=True)
-    category_id = GoodsCategorySerializer()
+    category = GoodsCategorySerializer()
 
     class Meta:
-        model = Goods
-        fields = ['id', 'name', 'slug', 'images', 'prices', 'category_id']
-
+        model = Good
+        fields = ['id', 'name', 'slug', 'images', 'prices', 'category']

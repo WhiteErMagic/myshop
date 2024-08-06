@@ -8,7 +8,7 @@ Content-Type: application/json
 ###
 
 # получение категории
-GET {{baseUrl}}/categories/8/
+GET {{baseUrl}}/categories/1/
 Content-Type: application/json
 
 ###
@@ -20,21 +20,22 @@ Content-Type: application/json
 ###
 
 # создание записи в карзине покупок
-POST {{baseUrl}}/cart/
+POST {{baseUrl}}/basketgood/
 Content-Type: application/json
-Authorization: Token 4ff7b8b37552a13b5c95599003a5c542b55be427
+//Authorization: Token b1d0106ea4208fedd2c67c81436904176142e287
+Authorization: Token 6459fe7fc484888bd55a56633229e7885dc97c53
 
 {
-  "good": 2,
+  "good": 3,
   "quantity": 10
 }
 
 ###
 
 # попытка поменять количенство
-PATCH {{baseUrl}}/cart/20/
+PATCH {{baseUrl}}/basketgood/2/
 Content-Type: application/json
-Authorization: Token 4ff7b8b37552a13b5c95599003a5c542b55be427
+Authorization: Token b1d0106ea4208fedd2c67c81436904176142e287
 
 {
   "quantity": 15
@@ -43,21 +44,21 @@ Authorization: Token 4ff7b8b37552a13b5c95599003a5c542b55be427
 ###
 
 # получение данных карзины
-GET {{baseUrl}}/cart/
+GET {{baseUrl}}/basket/
 Content-Type: application/json
-//Authorization: Token 3ae598d0efe09ee1ba7ca56fa20f89f0a057f2c9
-Authorization: Token 4ff7b8b37552a13b5c95599003a5c542b55be427
+//uthorization: Token 6459fe7fc484888bd55a56633229e7885dc97c53
+Authorization: Token b1d0106ea4208fedd2c67c81436904176142e287
 
 ###
 
 # удаление продукта
-DELETE {{baseUrl}}/cart/21/
+DELETE {{baseUrl}}/basketgood/1/
 Content-Type: application/json
-Authorization: Token 4ff7b8b37552a13b5c95599003a5c542b55be427
+Authorization: Token 6459fe7fc484888bd55a56633229e7885dc97c53
 
 ###
 
 # очистить карзину
-DELETE {{baseUrl}}/cart/0/
+DELETE {{baseUrl}}/basket/0/
 Content-Type: application/json
-Authorization: Token 4ff7b8b37552a13b5c95599003a5c542b55be427
+Authorization: Token b1d0106ea4208fedd2c67c81436904176142e287
