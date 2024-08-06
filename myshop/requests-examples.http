@@ -22,8 +22,8 @@ Content-Type: application/json
 # создание записи в карзине покупок
 POST {{baseUrl}}/basketgood/
 Content-Type: application/json
-//Authorization: Token b1d0106ea4208fedd2c67c81436904176142e287
-Authorization: Token 6459fe7fc484888bd55a56633229e7885dc97c53
+Authorization: Token b1d0106ea4208fedd2c67c81436904176142e287
+//Authorization: Token 6459fe7fc484888bd55a56633229e7885dc97c53
 
 {
   "good": 3,
@@ -44,9 +44,9 @@ Authorization: Token b1d0106ea4208fedd2c67c81436904176142e287
 ###
 
 # получение данных карзины
-GET {{baseUrl}}/basket/
+GET {{baseUrl}}/basket/2/
 Content-Type: application/json
-//uthorization: Token 6459fe7fc484888bd55a56633229e7885dc97c53
+//Authorization: Token 6459fe7fc484888bd55a56633229e7885dc97c53
 Authorization: Token b1d0106ea4208fedd2c67c81436904176142e287
 
 ###

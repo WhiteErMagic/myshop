@@ -1,4 +1,4 @@
-
+from django.db.models import Sum
 from rest_framework import viewsets
 from baskets.models import Basket
 from rest_framework.permissions import IsAuthenticated
@@ -16,11 +16,19 @@ class BasketViewSet(viewsets.ModelViewSet):
     serializer_class = BasketSerializer
     permission_classes = [IsAuthenticated, IsOwner]
 
-    def list(self, request, *args, **kwargs):
-        queryset = BasketGood.objects.filter(basket__user=request.user)
-        serializer = BasketSerializer(queryset, many=True)
+    # def list(self, request, *args, **kwargs):
+    #     queryset = BasketGood.objects.filter(basket__user=request.user)
+    #     serializer = BasketSerializer(queryset, many=True)
+    #     itog = BasketGood.objects.filter(basket__user=request.user).aggregate(summa=Sum("summa"),
+    #                                                                           quantity= Sum("quantity"))
+    #     #q = BasketGood.objects.filter(basket__user=request.user).aggregate(average_price=Sum("quantity"))
+    #     print(itog)
+    #     return Response(serializer.data)
 
-        return Response(serializer.data)
+    # def retrieve(self, request, *args, **kwargs):
+    #     queryset = BasketGood.objects.filter(basket__user=request.user)
+    #
+    #     return Response('serializer.data')
 
     def destroy(self, request, pk=None, *args, **kwargs):
         if pk == '0':

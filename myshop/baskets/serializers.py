@@ -1,4 +1,6 @@
 import datetime
+
+from django.db.models import Sum
 from rest_framework import serializers
 from .models import Basket, BasketGood
 from goods.models import Price
@@ -35,12 +37,26 @@ class BasketGoodSerializer(serializers.ModelSerializer):
         return instance
 
 
-class BasketSerializer(serializers.ModelSerializer):
+class GoodsForBasketSerializer(serializers.ModelSerializer):
     good = GoodsSerializer()
 
     class Meta:
         model = BasketGood
-        fields = ['id', 'summa', 'price', 'good']
+        fields = ['good', 'quantity', 'price', 'summa']
 
+
+class ItogField(serializers.Field):
+    def to_representation(self, value):
+        aggregate = BasketGood.objects.filter(basket_id=value).aggregate(summa=Sum("summa"), quantity= Sum("quantity"))
+        return aggregate
+
+
+class BasketSerializer(serializers.ModelSerializer):
+    goods = GoodsForBasketSerializer(many=True)
+    itog = ItogField(source='id')
+
+    class Meta:
+        model = Basket
+        fields = ['id', 'itog', 'goods', ]
 
 
